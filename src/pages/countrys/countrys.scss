@@ -1,3 +1,18 @@
 page-countrys {
-
+  .flag{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .containerSelect{
+    width: 80%;
+    margin: 0 auto;
+    border-left: 1px solid red;
+    border-bottom: 1px solid red;
+    border-right: 1px solid red;
+    select{
+      border: none;
+    }
+  }
 }

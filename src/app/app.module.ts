@@ -37,7 +37,6 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
   providers: [
     StatusBar,
     SplashScreen,
-
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpProvider,
     FirebaseProvider
