@@ -1,32 +1,24 @@
 <ion-header align-title="center">
-  <header-top >header-top</header-top>
+  <header-top ></header-top>
 </ion-header>
 
-<ion-content>
-  <div ion-item *ngFor="let country of countrysArray" >
+<ion-content padding class="contInfo">
+  <div class="contCountry" *ngFor="let country of countrysArray" >
     <ion-grid>
-        <ion-row (click)="selected(country)">
-          <ion-col col-4>
-            <div class="flag"><img src="https://pbs.twimg.com/profile_images/794566134611804164/93DBmxZk_400x400.jpg"></div>
-          </ion-col>
+        <ion-row (click)="selected(country.name, countrysArray)">
+          <div class="flag" [ngClass]="{'seleted': country.selected}">
+            <img src="{{ country.url }}">
+          </div>
           <ion-col col-8 align-self-center>
-            <div>{{ country.name }}</div>
+            <div>{{ country.name | titlecase}}</div>
           </ion-col>
         </ion-row>
     </ion-grid>
-    <div class="containerSelect">
-      <select>
-        <option>Antioquia</option>
-        <option>Antioquia</option>
-        <option>Antioquia</option>
-        <option>Antioquia</option>
-        <option>Antioquia</option>
-      </select>
-    </div>
+    <departaments [hidden]="!country.showLevel" [departaments]="country.departaments"></departaments>
   </div>
 
   <div class="clear"></div>
 
-  <button ion-button color="light" class="center-block" (click)="goToCategorys()">Continuar</button>
+  <button ion-button color="light" class="center-block goCategorys" (click)="goToCategorys()">Continuar</button>
 
 </ion-content>

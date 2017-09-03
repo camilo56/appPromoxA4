@@ -19,6 +19,8 @@ export const firebaseConfig = {
 import { MyApp } from './app.component';
 import { HttpProvider } from '../providers/http/http';
 import { FirebaseProvider } from '../providers/firebase/firebase';
+import { ToolsProvider } from '../providers/tools/tools';
+import { LocationProvider } from '../providers/location/location';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpProvider,
-    FirebaseProvider
+    FirebaseProvider,
+    ToolsProvider,
+    LocationProvider
   ]
 })
 export class AppModule {}

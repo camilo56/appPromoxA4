@@ -1,7 +1,24 @@
 header-top {
   .row{
-    background: red;
+    background: #ff0000;
     border-bottom: 5px solid #fff;
+    .col{
+      width: 16.6%;
+      padding: 3% 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid white;
+      &:last-child{
+        border-right: 0px;
+      }
+    }
+    .logo{
+      width: 60%;
+    }
+    .search{
+      width: 40%;
+    }
   }
   .clearGray{
     height: 10px;
