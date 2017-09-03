@@ -10,11 +10,11 @@ import 'rxjs/add/operator/map';
 export class LocationProvider {
 
   private departaments = new Subject<any>();
-  public observerSubject$ = this.departaments.asObservable();
+  public oDepartament$ = this.departaments.asObservable();
+  private citys = new Subject<any>();
+  public oCity$ = this.citys.asObservable();
 
-  constructor(private firebase: AngularFireDatabase) {
-    console.log('Hello LocationProvider Provider');
-  }
+  constructor(private firebase: AngularFireDatabase) {}
 
   get countrys(){  
     return this.firebase.object('/location/countrys', { preserveSnapshot: true })
@@ -27,18 +27,24 @@ export class LocationProvider {
    * Retorna el observable que se activa cuando el usuario selecciona un pais
    */
   get departament$(): Observable<any>{
-    return this.observerSubject$;
+    return this.oDepartament$;
+  }
+  /**
+   * Retorna el observable que se activa cuando el usuario selecciona un departamento
+   */
+  get city$(): Observable<any>{
+    return this.oCity$;
   }
   /**
    * Recorre el array de paises y retorna un nuevo array procesado
    */
-  selected(country:string, countrysArray: object[]){
-    return countrysArray.map((obj:any) => this.procesSelected(obj, country));
+  selectedCountry(country:string, countrysArray: object[]){
+    return countrysArray.map((obj:any) => this.procesCountrys(obj, country));
   }
   /**
    * Muestra o oculta los departamentos del pais selecionado
    */
-  procesSelected(obj:any, country): object[]{
+  procesCountrys(obj:any, country): object[]{
     switch(true){
       case obj.name === country && obj.hasLevel !== undefined:
       this.getDepartaments(`${obj.hasLevel}/${obj.name}`, obj.name);
@@ -56,14 +62,30 @@ export class LocationProvider {
   }
   /**
    * Realiza la consulta de departamentos del pais seleccionado, 
-   * Ejecuta el observable departament$ con los datos procesados
+   * Ejecuta el observable oDepartament$ con los datos procesados
+   * @param url direccion de la consulta
+   * @param name nombre del pais selecionado
    */
   getDepartaments(url, name){
     this.firebase.object(url, { preserveSnapshot: true })
-        .subscribe(snapshot => {
-          this.departaments.next({name: name, 
-                                  departaments: this.departamentsFA(snapshot.val())});
-        });
+    .subscribe(snapshot => {
+      this.departaments.next({name: name, 
+        departaments: this.departamentsFA(snapshot.val())});
+      });
+    }
+    /**
+     * Realiza la consulta las ciudade  del pais y departamento seleccionado, 
+     * Ejecuta el observable oCity$ con los datos procesados
+     * @param url direccion de la consulta
+     * @param name nombre del departamento selecionado
+     */
+    getCitys(url, name){
+    this.firebase.object(url, { preserveSnapshot: true })
+      .subscribe(snapshot => {
+          this.citys.next({name: name,
+            citys: this.citysFA(snapshot.val())
+        })
+      });
   }
   /**
    * comvierte el array de paises al formato requerido
@@ -90,6 +112,16 @@ export class LocationProvider {
                                     showLevel: false,
                                     selected: false,
                                     hasLevel: infoObject[current].hasLevel});
+            }, []);
+
+  }
+  /**
+   * comvierte el array de ciudades al formato requerido
+   */
+  citysFA(infoObject = {}){
+    return Object.keys(infoObject)
+            .reduce((before, current, index, data) =>{
+              return before.concat({name: current});
             }, []);
 
   }

@@ -14,7 +14,8 @@
           </ion-col>
         </ion-row>
     </ion-grid>
-    <departaments [hidden]="!country.showLevel" [departaments]="country.departaments"></departaments>
+    <departaments [hidden]="!country.showLevel" [countrySelected]="countrySelected" [departaments]="country.departaments"></departaments>
+    <citys [hidden]=""></citys>
   </div>
 
   <div class="clear"></div>

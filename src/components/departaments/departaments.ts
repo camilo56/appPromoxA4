@@ -1,4 +1,5 @@
 import { Component, Input, Output,} from '@angular/core';
+import { LocationProvider } from '../../providers/location/location';
 
 @Component({
   selector: 'departaments',
@@ -6,8 +7,12 @@ import { Component, Input, Output,} from '@angular/core';
 })
 export class DepartamentsComponent {
 
+  @Input() countrySelected: string;
   @Input() departaments: any[] = [];
 
-  constructor() {}
+  constructor(public locationProvider: LocationProvider) {}
 
+  change(departament: any){
+    this.locationProvider.getCitys(`location/citys/${this.countrySelected}/${departament.value}`, departament.value);
+  }
 }

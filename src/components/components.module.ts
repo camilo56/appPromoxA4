@@ -5,19 +5,22 @@ import { CategoryComponent } from './category/category';
 import { CrumbCategoryComponent } from './crumb-category/crumb-category';
 import { HeaderTopComponent } from './header-top/header-top';
 import { DepartamentsComponent } from './departaments/departaments';
+import { CitysComponent } from './citys/citys';
 @NgModule({
 	declarations: [
     CrumbLocationComponent,
     CategoryComponent,
     CrumbCategoryComponent,
     HeaderTopComponent,
-    DepartamentsComponent],
+    DepartamentsComponent,
+    CitysComponent],
 	imports: [CommonModule],
 	exports: [
     CrumbLocationComponent,
     CategoryComponent,
     CrumbCategoryComponent,
     HeaderTopComponent,
-    DepartamentsComponent]
+    DepartamentsComponent,
+    CitysComponent]
 })
 export class ComponentsModule {}

@@ -1,5 +1,5 @@
 <div class="containerSelect" >
-    <select>
+    <select #departament (change)="change(departament)">
         <option></option>
         <option *ngFor="let departaments of departaments">{{departaments.name}}</option>
     </select>

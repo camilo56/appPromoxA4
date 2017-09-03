@@ -14,9 +14,11 @@ import { LocationProvider } from '../../providers/location/location';
 
 export class CountrysPage {
   countrysArray: object[];
-  countrySelected: string;
+  countrySelected: string | boolean = false;
   departamentsArray: object[];
-  departamentSelected: string;
+  departamentSelected: string | boolean = false;
+  citysArray: object[];
+  citySelected: string | boolean = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -30,24 +32,30 @@ export class CountrysPage {
       .subscribe(data => this.countrysArray = data);
     this.locationProvider.departament$
       .subscribe(this.loadDepartaments);
+    this.locationProvider.city$
+      .subscribe(this.loadCitys);
   }
 
   selected(country:string, countrysArray: object[]){
-    this.countrysArray = this.locationProvider.selected(country, countrysArray);
+    this.countrysArray = this.locationProvider.selectedCountry(country, countrysArray);
   }
 
   loadDepartaments = (data) => {
-    console.log(data);
     this.countrySelected = data.name;
-    console.log(this.countrysArray);
     this.countrysArray = this.countrysArray.map( (info:any) =>{
-      console.log(info);
       if(info.name === this.countrySelected){
         info.departaments = data.departaments;
       }
       return info;
     })
     this.departamentsArray = data.departaments;
+  }
+
+  loadCitys = (data) => {
+    this.departamentSelected = data.name;
+    this.citysArray = data.citys;
+    console.log(this.departamentSelected)
+    console.log(this.citysArray)
   }
 
   goToCategorys(){

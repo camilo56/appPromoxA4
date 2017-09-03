@@ -2,5 +2,7 @@
   "name": "app-epromoxA4",
   "app_id": "a58ecc65",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
