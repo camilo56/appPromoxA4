@@ -5,6 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { ToolsProvider } from './../../providers/tools/tools';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { LocationProvider } from '../../providers/location/location';
+import { StorageProvider } from '../../providers/storage/storage';
 
 @IonicPage()
 @Component({
@@ -24,6 +25,7 @@ export class CountrysPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public tools: ToolsProvider,
+              public storageProvider: StorageProvider,
               public locationProvider: LocationProvider,
               private firebase: AngularFireDatabase) {
   }
@@ -38,6 +40,7 @@ export class CountrysPage {
   }
 
   selected(country:string, countrysArray: object[]){
+    this.canNext = false;
     this.countrysArray = this.locationProvider.selectedCountry(country, countrysArray);
   }
 
@@ -51,20 +54,36 @@ export class CountrysPage {
     })
     this.departamentsArray = data.departaments;
   }
-  
+
   loadCitys = (data) => {
     this.canNext = false;
-    this.citysArray = data.citys;
     this.departamentSelected = data.name;
+    if(this.departamentSelected === ''){
+      this.citysArray = [];
+    }else{
+      this.citysArray = data.citys;
+    }
   }
 
   citySelected(city: string){
-    this.citySelect = city;
     this.canNext = true;
+    this.citySelect = city;
   }
 
   goToCategorys(){
     this.navCtrl.push('CategorysPage');
+  }
+
+  ionViewCanLeave() {
+    let provider = this.storageProvider;
+    console.log('ionViewCanLeave');
+    console.log('countrySelected', this.countrySelected);
+    console.log('departamentSelected', this.departamentSelected);
+    console.log('citySelect', this.citySelect);
+    provider.set('country', this.countrySelected).then(data=>alert(data));
+    provider.set('departament', this.departamentSelected);
+    provider.set('city', this.citySelect);
+    return true;
   }
 
 }

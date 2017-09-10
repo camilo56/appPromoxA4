@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the CategorysPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { StorageProvider } from '../../providers/storage/storage';
 
 @IonicPage()
 @Component({
@@ -15,11 +10,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CategorysPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public storageProvider: StorageProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CategorysPage');
+    this.storageProvider.get('country').then((data)=> alert(data))
+    this.storageProvider.get('departament').then((data)=> alert(data))
+    this.storageProvider.get('city').then((data)=> alert(data))
   }
 
 }

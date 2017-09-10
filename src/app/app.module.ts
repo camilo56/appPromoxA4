@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
@@ -21,6 +23,7 @@ import { HttpProvider } from '../providers/http/http';
 import { FirebaseProvider } from '../providers/firebase/firebase';
 import { ToolsProvider } from '../providers/tools/tools';
 import { LocationProvider } from '../providers/location/location';
+import { StorageProvider } from '../providers/storage/storage';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { LocationProvider } from '../providers/location/location';
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     IonicModule.forRoot(MyApp)
@@ -43,7 +47,8 @@ import { LocationProvider } from '../providers/location/location';
     HttpProvider,
     FirebaseProvider,
     ToolsProvider,
-    LocationProvider
+    LocationProvider,
+    StorageProvider
   ]
 })
 export class AppModule {}
