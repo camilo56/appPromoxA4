@@ -1,11 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-/**
- * Generated class for the CitysComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
 @Component({
   selector: 'citys',
   templateUrl: 'citys.html'
@@ -13,10 +7,13 @@ import { Component } from '@angular/core';
 export class CitysComponent {
 
   text: string;
+  @Input() citys: any[] = [];
+  @Output() selected = new EventEmitter();
 
   constructor() {
-    console.log('Hello CitysComponent Component');
-    this.text = 'Hello World';
   }
 
+  change(city: any){
+    this.selected.emit(city.value);
+  }
 }

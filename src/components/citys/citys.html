@@ -1,4 +1,6 @@
-<!-- Generated template for the CitysComponent component -->
-<div>
-  {{text}}
+<div class="containerSelect" >
+  <select #city (change)="change(city)">
+      <option value="">Selecciona una ciudad</option>
+      <option value="{{city.name}}" *ngFor="let city of citys">{{city.name}}</option>
+  </select>
 </div>

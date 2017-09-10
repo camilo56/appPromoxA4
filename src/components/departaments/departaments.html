@@ -1,6 +1,6 @@
 <div class="containerSelect" >
     <select #departament (change)="change(departament)">
-        <option></option>
+        <option value="">Selecciona un departamento</option>
         <option *ngFor="let departaments of departaments">{{departaments.name}}</option>
     </select>
 </div>

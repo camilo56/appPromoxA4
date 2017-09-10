@@ -15,11 +15,11 @@
         </ion-row>
     </ion-grid>
     <departaments [hidden]="!country.showLevel" [countrySelected]="countrySelected" [departaments]="country.departaments"></departaments>
-    <citys [hidden]=""></citys>
+    <citys [hidden]="!country.showLevel" [citys]="citysArray" (selected)="citySelected($event)"></citys>
   </div>
 
   <div class="clear"></div>
 
-  <button ion-button color="light" class="center-block goCategorys" (click)="goToCategorys()">Continuar</button>
+  <button ion-button [hidden]="!canNext" color="light" class="center-block goCategorys" (click)="goToCategorys()">Continuar</button>
 
 </ion-content>

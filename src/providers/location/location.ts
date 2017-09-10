@@ -74,7 +74,7 @@ export class LocationProvider {
       });
     }
     /**
-     * Realiza la consulta las ciudade  del pais y departamento seleccionado, 
+     * Realiza la consulta las ciudades  del pais y departamento seleccionado, 
      * Ejecuta el observable oCity$ con los datos procesados
      * @param url direccion de la consulta
      * @param name nombre del departamento selecionado
