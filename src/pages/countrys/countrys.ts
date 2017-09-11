@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 import { ToolsProvider } from './../../providers/tools/tools';
+import { LoadingProvider } from '../../providers/loading/loading';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { LocationProvider } from '../../providers/location/location';
 import { StorageProvider } from '../../providers/storage/storage';
@@ -16,6 +17,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 export class CountrysPage {
   countrysArray: object[];
   countrySelected: string;
+  countryFlag: string;
   departamentsArray: object[];
   departamentSelected: string;
   citysArray: object[];
@@ -25,23 +27,43 @@ export class CountrysPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public tools: ToolsProvider,
+              public loadingProvider: LoadingProvider,
               public storageProvider: StorageProvider,
               public locationProvider: LocationProvider,
               private firebase: AngularFireDatabase) {
   }
 
+
+  /**
+   * consulta que no se tenga registrado un pais en el storage del
+   * dispositivo, para que el usuario pueda seleccionar su ubicacion
+   */
   ionViewDidLoad() {
+    this.clear();
     this.locationProvider.countrys
       .subscribe(data => this.countrysArray = data);
     this.locationProvider.departament$
       .subscribe(this.loadDepartaments);
     this.locationProvider.city$
       .subscribe(this.loadCitys);
+
+    //this.storageProvider.get('country').then(this.processCountry, this.handleError);
   }
 
-  selected(country:string, countrysArray: object[]){
+  processCountry = (data) => {
+    if(data !== null && data !== ''){
+      this.goToCategorys();
+    }
+  }
+
+  handleError = (data) => {
+    console.log('error consultado la db');
+  }
+
+  selected(country:{name: string, url: string}, countrysArray: object[]){
     this.canNext = false;
-    this.countrysArray = this.locationProvider.selectedCountry(country, countrysArray);
+    this.countryFlag = country.url;
+    this.countrysArray = this.locationProvider.selectedCountry(country.name, countrysArray);
   }
 
   loadDepartaments = (data) => {
@@ -59,7 +81,7 @@ export class CountrysPage {
     this.canNext = false;
     this.departamentSelected = data.name;
     if(this.departamentSelected === ''){
-      this.citysArray = [];
+      this.clear();
     }else{
       this.citysArray = data.citys;
     }
@@ -76,14 +98,24 @@ export class CountrysPage {
 
   ionViewCanLeave() {
     let provider = this.storageProvider;
-    console.log('ionViewCanLeave');
-    console.log('countrySelected', this.countrySelected);
-    console.log('departamentSelected', this.departamentSelected);
-    console.log('citySelect', this.citySelect);
-    provider.set('country', this.countrySelected).then(data=>alert(data));
-    provider.set('departament', this.departamentSelected);
-    provider.set('city', this.citySelect);
-    return true;
+    this.loadingProvider.show();
+    const prom = new Promise((resolve, reject) => {
+      Promise.all([
+        provider.set('city', this.citySelect),
+        provider.set('flag', this.countryFlag),
+        provider.set('country', this.countrySelected),
+        provider.set('departament', this.departamentSelected),
+      ]).then(values => resolve(true));
+    })
+
+    return prom;
   }
 
+  clear(){
+    this.canNext = false;
+    this.citysArray = [];
+    this.citySelect = '';
+    this.departamentsArray = []
+    this.departamentSelected = '';
+  }
 }

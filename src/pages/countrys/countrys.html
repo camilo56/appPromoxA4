@@ -1,11 +1,13 @@
 <ion-header align-title="center">
-  <header-top ></header-top>
+  <header-top>
+    <div class="clearGray"></div>
+  </header-top>
 </ion-header>
 
 <ion-content padding class="contInfo">
   <div class="contCountry" *ngFor="let country of countrysArray" >
     <ion-grid>
-        <ion-row (click)="selected(country.name, countrysArray)">
+        <ion-row (click)="selected(country, countrysArray)">
           <div class="flag" [ngClass]="{'seleted': country.selected}">
             <img src="{{ country.url }}">
           </div>

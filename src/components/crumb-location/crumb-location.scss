@@ -1,3 +1,28 @@
 crumb-location {
-
+    .cont{
+        background: gray;
+        padding: 16px 0px 4px 0px;
+    }
+    .info{
+        background: #fff;
+    }
+    .info{
+        padding: 4px;
+        color: gray;
+        display: flex;
+        padding-left: 20px;
+        align-items: center;
+        justify-content: start;
+    }
+    .flag{
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        position: relative;
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+    span{
+        margin: 0px 4px;
+    }
 }

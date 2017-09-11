@@ -1,22 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-/**
- * Generated class for the CrumbLocationComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
+import { StorageProvider } from '../../providers/storage/storage';
+
 @Component({
   selector: 'crumb-location',
   templateUrl: 'crumb-location.html'
 })
-export class CrumbLocationComponent {
+export class CrumbLocationComponent implements OnInit{
 
-  text: string;
+  flag: string;
+  citys: string;
+  country: string;
+  departament: string;
 
-  constructor() {
-    console.log('Hello CrumbLocationComponent Component');
-    this.text = 'Hello World';
+  constructor(private storageProvider: StorageProvider) {
+    console.log('crumb-location');
+  }
+
+  ngOnInit() { 
+    console.log('crumb-location onViewDidEnter');
+    this.storageProvider.get('city').then(data => this.citys = data);
+    this.storageProvider.get('flag').then(data => this.flag = data);
+    this.storageProvider.get('country').then(data => this.country = data);
+    this.storageProvider.get('departament').then(data => this.departament = data);
   }
 
 }

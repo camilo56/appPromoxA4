@@ -24,6 +24,8 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
 import { ToolsProvider } from '../providers/tools/tools';
 import { LocationProvider } from '../providers/location/location';
 import { StorageProvider } from '../providers/storage/storage';
+import { LoadingProvider } from '../providers/loading/loading';
+import { CategorysProvider } from '../providers/categorys/categorys';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { StorageProvider } from '../providers/storage/storage';
     FirebaseProvider,
     ToolsProvider,
     LocationProvider,
-    StorageProvider
+    StorageProvider,
+    LoadingProvider,
+    CategorysProvider
   ]
 })
 export class AppModule {}

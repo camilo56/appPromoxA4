@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { StorageProvider } from '../../providers/storage/storage';
+import { LoadingProvider } from '../../providers/loading/loading';
+import { CategorysProvider } from '../../providers/categorys/categorys';
 
 @IonicPage()
 @Component({
@@ -10,15 +12,20 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class CategorysPage {
 
+  categorys: any[];
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
+              public loadingProvider: LoadingProvider,
+              private categorysProvider: CategorysProvider,
               public storageProvider: StorageProvider) {
   }
 
   ionViewDidLoad() {
-    this.storageProvider.get('country').then((data)=> alert(data))
-    this.storageProvider.get('departament').then((data)=> alert(data))
-    this.storageProvider.get('city').then((data)=> alert(data))
+    console.log('category onViewDidEnter');
+    this.loadingProvider.close();
+    this.categorysProvider.get()
+        .subscribe(data => this.categorys = data);
   }
 
 }

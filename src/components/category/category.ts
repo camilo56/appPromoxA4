@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { CategorysProvider } from '../../providers/categorys/categorys';
 
 /**
  * Muestra un tipo de categoria en la pagina categorys
@@ -10,11 +12,10 @@ import { Component } from '@angular/core';
 })
 export class CategoryComponent {
 
-  text: string;
+  @Input() img: string;
+  @Input() name: string;
 
-  constructor() {
-    console.log('Hello CategoryComponent Component');
-    this.text = 'Hello World';
+  constructor(private categorysProvider: CategorysProvider) {
   }
 
 }
