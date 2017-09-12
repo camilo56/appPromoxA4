@@ -1,11 +1,22 @@
 <ion-header>
+  <ion-navbar hideWhen="androids">
+    <ion-title>Categorias</ion-title>
+  </ion-navbar>
   <header-top>
     <crumb-location></crumb-location>
   </header-top>
 </ion-header>
 
 <ion-content padding >
+  <div class="contSubscribe" (click)="goSubcribe()" [hidden]="hideSubscribe">
+    <div tappable (click)="close()" class="close" >X</div>
+    <img src="assets/categorys/subscribe.png">
+  </div>
   <div class="contCategory">
-    <category *ngFor="let category of categorys" [img]="category.url" [name]="category.name"></category>
+    <category *ngFor="let category of categorys" 
+              [img]="category.url"
+              [sub]="category.sub"
+              [name]="category.name"
+              [hasLevel]="category.hasLevel"></category>
   </div>
 </ion-content>

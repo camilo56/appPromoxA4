@@ -13,19 +13,24 @@ import { CategorysProvider } from '../../providers/categorys/categorys';
 export class CategorysPage {
 
   categorys: any[];
+  hideSubscribe = false;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
+  constructor(public navParams: NavParams,
+              public navCtrl: NavController, 
               public loadingProvider: LoadingProvider,
-              private categorysProvider: CategorysProvider,
-              public storageProvider: StorageProvider) {
+              public storageProvider: StorageProvider,
+              private categorysProvider: CategorysProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('category onViewDidEnter');
     this.loadingProvider.close();
     this.categorysProvider.get()
         .subscribe(data => this.categorys = data);
   }
-
+  close() {
+    this.hideSubscribe = true;
+  }
+  goSubcribe(){
+    this.navCtrl.push('SubscribePage');
+  }
 }

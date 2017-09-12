@@ -1,5 +1,8 @@
 <!-- Generated template for the CategoryComponent component -->
-<div class="category">
+<div tappable class="category" (click)="select()">
   <img src="{{ img }}">
-  <h2 class="title">{{ name }}</h2>
+  <h2 class="title" [ngClass]="{'active': showSub}">{{ name }}</h2>
+</div>
+<div class="contSub" [hidden]="!showSub">
+  <button ion-button (click)="clickSub()" class="itemSub" *ngFor="let item of sub" >{{ item.name }}</button>
 </div>

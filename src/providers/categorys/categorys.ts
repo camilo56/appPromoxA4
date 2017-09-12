@@ -11,7 +11,7 @@ export class CategorysProvider {
   constructor(private firebase: AngularFireDatabase) {
   }
 
-  get(){
+    get(){
     return this.firebase.object('/categorys', { preserveSnapshot: true })
       .map(snapshot => {return this.categorysFA(snapshot.val()) })
   }
@@ -21,11 +21,21 @@ export class CategorysProvider {
     console.log(data)
     return Object.keys(data)
                 .reduce((before, current) =>{
+                  let sub = this.validateSub(data[current].sub);
                   return before.concat({
+                                    sub: sub,
                                     name: current,
                                     url: data[current].url,
                                     hasLevel: data[current].hasLevel,
                                 });
                 }, []);
+  }
+
+  validateSub(sub: any): any{
+    console.log('sub')
+    console.log(sub)
+    if(sub === undefined){return false};
+    return Object.keys(sub)
+          .reduce((before, current) => before.concat({name: current}) , []);
   }
 }
