@@ -4,5 +4,5 @@
   <h2 class="title" [ngClass]="{'active': showSub}">{{ name }}</h2>
 </div>
 <div class="contSub" [hidden]="!showSub">
-  <button ion-button (click)="clickSub()" class="itemSub" *ngFor="let item of sub" >{{ item.name }}</button>
+  <button ion-button (click)="clickSub(item.name)" class="itemSub" *ngFor="let item of sub" >{{ item.name }}</button>
 </div>

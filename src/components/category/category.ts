@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { CategorysProvider } from '../../providers/categorys/categorys';
@@ -18,6 +18,7 @@ export class CategoryComponent implements OnInit {
   @Input() name: string;
   showSub: boolean = false;
   @Input() hasLevel: boolean;
+  @Output() onSelected:  EventEmitter<any> = new EventEmitter();
 
   constructor(public navCtrl: NavController,
               private categorysProvider: CategorysProvider) {}
@@ -25,17 +26,11 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {}
 
   select(){
-    if(this.hasLevel){
-      this.showSub = !this.showSub;
-    }else{
-      console.log('cambio de pagina');
-      console.log(this.sub);
-      //this.navCtrl.push('CategorysPage');
-    }
+    this.showSub = !this.showSub;
   }
 
-  clickSub(){
-    console.log('clickSub');
+  clickSub(subName: string){
+    this.onSelected.emit({category: this.name, sub: subName})
   }
 
 }

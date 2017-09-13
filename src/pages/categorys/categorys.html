@@ -13,10 +13,11 @@
     <img src="assets/categorys/subscribe.png">
   </div>
   <div class="contCategory">
-    <category *ngFor="let category of categorys" 
+    <category *ngFor="let category of categorys"
               [img]="category.url"
               [sub]="category.sub"
               [name]="category.name"
+              (onSelected)="select($event)"
               [hasLevel]="category.hasLevel"></category>
   </div>
 </ion-content>
